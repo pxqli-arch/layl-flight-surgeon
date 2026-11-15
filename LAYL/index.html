@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#071429" />
+  <meta name="description" content="LAYL: Flight Surgeon — an interactive lunar mission trainer." />
+  <title>LAYL — Flight Surgeon</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="src/styles.css" />
+  <link rel="stylesheet" href="src/capsules.css" />
+  <link rel="stylesheet" href="src/mission.css" />
+  <script type="module" src="src/main.js"></script>
+</head>
+<body>
+  <main id="app" class="scene" aria-label="Layl Flight Surgeon title screen">
+    <div class="scene__overlay" aria-hidden="true"></div>
+    <div class="scene__stars" aria-hidden="true"></div>
+    <div class="mobile-logo" aria-hidden="true"><span>LAYL</span><small>FLIGHT SURGEON</small></div>
+
+    <nav class="main-menu" id="mainMenu" aria-label="Game main menu">
+      <button class="main-menu__item is-featured" type="button" data-page="start">Start</button>
+      <button class="main-menu__item" type="button" data-page="guide">Guide</button>
+      <button class="main-menu__item" type="button" data-page="capsules">Characters</button>
+      <button class="main-menu__item" type="button" data-page="achievements">Achievements</button>
+      <button class="main-menu__item" type="button" data-page="settings">Settings</button>
+      <button class="main-menu__item" type="button" data-page="credits">Credits</button>
+    </nav>
+
+    <div class="scene__footer" aria-hidden="true">
+      <span>TEAM LAYL <span class="footer-dot">✦</span> LUNAR MISSION TRAINER</span>
+      <span>PROTOTYPE 0.7</span>
+    </div>
+
+    <div class="panel-overlay" id="panelOverlay" hidden>
+      <div class="panel-backdrop" id="panelBackdrop"></div>
+      <section class="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle" tabindex="-1">
+        <div class="panel__topline"><span>LAYL / MISSION CONTROL</span><span class="panel__decor">✧ &nbsp; ✦ &nbsp; ✧</span></div>
+        <button class="panel__close" id="panelClose" type="button" aria-label="Return to main menu">✕</button>
+        <p class="panel__eyebrow" id="panelEyebrow"></p>
+        <h1 class="panel__title" id="panelTitle"></h1>
+        <div class="panel__content" id="panelContent"></div>
+      </section>
+    </div>
+    <section class="capsule-bay" id="capsuleBay" hidden aria-label="Capsule shop and card collection">
+      <div class="capsule-bay__ambient" aria-hidden="true"></div>
+      <div class="capsule-bay__content" id="capsuleMainView">
+        <header class="capsule-topbar">
+          <button class="capsule-icon-button capsule-back" id="capsuleBack" data-capsule-back type="button" aria-label="Back to main menu">←</button>
+          <div class="capsule-brand"><span class="capsule-brand__word">LAYL<span>✦</span></span><small>FLIGHT SURGEON</small></div>
+          <div class="capsule-topbar__separator" aria-hidden="true"></div>
+          <div class="capsule-heading"><div class="capsule-heading__icon" aria-hidden="true">▣</div><div><h1>CAPSULE BAY</h1><p>DISCOVER · COLLECT · LEARN</p></div></div>
+          <div class="capsule-currency"><span aria-hidden="true">★</span><strong id="capsuleCredits">240</strong></div>
+        </header>
+        <div class="capsule-layout">
+          <section class="capsule-shop" aria-label="Buy Cosmic Discovery Pack">
+            <div class="capsule-shop__eyebrow">✦ FEATURED PACK ✦</div>
+            <h2>Cosmic Discovery</h2>
+            <div class="capsule-pack-wrap"><img class="capsule-pack-art" src="assets/packs/cosmic-front.webp" alt="Cosmic Discovery booster pack, featuring the falcon astronaut. Contains five cards." draggable="false" /><div class="capsule-pedestal" aria-hidden="true"></div></div>
+            <button type="button" id="capsuleBuy" data-buy-pack class="capsule-button capsule-button--gold capsule-buy">🛒 &nbsp; BUY PACK <span>★ 100</span></button>
+            <p class="capsule-shop__hint">Guaranteed: <strong>2 equipment</strong> · <strong>2 discoveries</strong> · <strong>1 astronaut</strong></p>
+            <p class="capsule-shop__subhint">Earn credits from missions in a future update. This version has demo credits for testing.</p>
+          </section>
+          <section class="capsule-collection" aria-label="Unlocked collectible cards">
+            <div class="capsule-collection__titlebar"><div><span class="capsule-collection__eyebrow">✧ YOUR SPACE ENCYCLOPEDIA</span><h2>My Collection <span>✦</span></h2></div><div class="capsule-unlocked" id="capsuleCount">Unlocked: 0 / 15</div></div>
+            <div class="capsule-filter-row" id="capsuleFilters" role="group" aria-label="Filter collection by card category">
+              <button type="button" class="capsule-filter is-active" aria-pressed="true" data-filter="all">✦ All</button>
+              <button type="button" class="capsule-filter" aria-pressed="false" data-filter="astronauts">◉ Astronauts</button>
+              <button type="button" class="capsule-filter" aria-pressed="false" data-filter="equipment">⚙ Equipment</button>
+              <button type="button" class="capsule-filter" aria-pressed="false" data-filter="plants">☘ Plants</button>
+              <button type="button" class="capsule-filter" aria-pressed="false" data-filter="stars">★ Stars</button>
+              <button type="button" class="capsule-filter" aria-pressed="false" data-filter="cosmic">✧ Cosmic</button>
+            </div>
+            <div class="capsule-grid" id="capsuleGrid" aria-live="polite"></div>
+            <div class="capsule-collection__bottom"><span><strong id="capsuleOwnedCount">0</strong> discovered cards · Tap one to see facts</span><div class="capsule-pages"><button type="button" id="capsulePrev" data-page-prev aria-label="Previous catalog page">❮</button><span id="capsulePage" aria-live="polite">1 / 2</span><button type="button" id="capsuleNext" data-page-next aria-label="Next catalog page">❯</button></div></div>
+          </section>
+        </div>
+        <div class="capsule-footer"><span>✦ SPACE IS FULL OF STORIES. COLLECT THEM ALL.</span><button class="capsule-owner-access" id="capsuleOwnerOpen" type="button" aria-label="Owner tools, PIN required">🔒 Team tools</button></div>
+      </div>
+      <section class="capsule-opening" id="capsuleOpening" hidden aria-label="Open your card pack" aria-live="polite"></section>
+      <div class="capsule-detail" id="capsuleDetail" hidden></div>
+      <div class="capsule-owner-overlay" id="capsuleOwnerOverlay" hidden>
+        <div class="capsule-owner-scrim" data-owner-close></div>
+        <section class="capsule-owner-panel" role="dialog" aria-modal="true" aria-labelledby="capsuleOwnerTitle">
+          <div class="capsule-detail__top"><span class="capsule-detail__category">Local developer controls</span><button class="capsule-icon-button" type="button" data-owner-close aria-label="Close owner tools">✕</button></div>
+          <h2 id="capsuleOwnerTitle">🔐 Team Layl Owner Tools</h2>
+          <p>The PIN is printed privately in your VS Code terminal each time you start the game. This changes only the collection saved in this browser.</p>
+          <label for="capsuleOwnerPin">Owner PIN</label>
+          <input type="password" id="capsuleOwnerPin" inputmode="numeric" maxlength="6" pattern="[0-9]*" autocomplete="off" placeholder="6-digit PIN" />
+          <div class="capsule-owner-actions">
+            <button type="button" data-owner-action="clear" class="capsule-button">Clear all cards</button>
+            <button type="button" data-owner-action="restart" class="capsule-button">Reset cards + credits</button>
+            <button type="button" data-owner-action="credit" class="capsule-button">+100 test credits</button>
+          </div>
+          <p id="capsuleOwnerStatus" class="capsule-owner-status" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+      <div class="capsule-feedback" id="capsuleFeedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <div class="mission-bridge" id="missionBridge" hidden><iframe id="missionBridgeFrame" src="mission/index.html" title="LAYL Three Stage Lunar Academy" allow="fullscreen"></iframe></div>
+    <section class="mission-game" id="missionGame" hidden aria-label="Playable Lunar Base Alpha mission">
+      <header class="mission-topbar">
+        <button type="button" class="mission-nav-back" data-mission-exit>← Main Menu</button>
+        <div class="mission-brand"><b>LAYL</b><span>FLIGHT SURGEON / MISSION 01</span></div>
+        <div class="mission-day"><span class="mission-live-dot"></span> LUNAR BASE ALPHA <span>· SOL 01</span></div>
+        <button class="mission-nav-reset" type="button" data-mission-reset>↻ Restart Mission</button>
+      </header>
+      <div class="mission-shell">
+        <div class="mission-viewport">
+          <div class="mission-viewport__top"><span>◉ LUNAR OUTPOST · NORTH SECTOR</span><span>MOON SURFACE SIMULATION</span></div>
+          <canvas id="missionCanvas" width="1200" height="730" tabindex="0" aria-label="Use arrow keys to move the falcon astronaut and press E near a station to interact"></canvas>
+          <div class="mission-near" id="missionNear" hidden>Press E to interact</div>
+          <div class="mission-mobile-controls" aria-label="Touchscreen movement controls">
+            <button type="button" class="touch-up" data-direction="ArrowUp" aria-label="Move up">▲</button>
+            <button type="button" class="touch-left" data-direction="ArrowLeft" aria-label="Move left">◀</button>
+            <button type="button" class="touch-down" data-direction="ArrowDown" aria-label="Move down">▼</button>
+            <button type="button" class="touch-right" data-direction="ArrowRight" aria-label="Move right">▶</button>
+          </div>
+          <div class="mission-scene-hint">↑ ↓ ← → MOVE <span>·</span> E INTERACT <span>·</span> ESC MENU</div>
+        </div>
+        <aside class="mission-hud" aria-label="Mission systems and objectives">
+          <div class="mission-hud__title"><span>✧ MISSION CONTROL</span><b id="missionProgress">0 / 5 tasks</b></div>
+          <section class="mission-hud__block"><h2>Outpost resources</h2><div id="missionStats"></div></section>
+          <section class="mission-hud__block mission-hud__block--tanks"><h2>◉ Emergency oxygen tanks <span id="missionTanksReady">1 / 4 ready</span></h2><div id="missionTanks" class="mission-tanks-mini"></div><small class="mission-tanks-helper">Press E at Life Support to refill.</small></section>
+          <section class="mission-hud__block"><h2>✚ Crew vitals</h2><div id="missionCrew"></div></section>
+          <section class="mission-hud__block mission-hud__block--tasks"><h2>Current objectives</h2><div id="missionObjectives"></div></section>
+          <section class="mission-hud__brief"><strong>✦ YOUR NEXT STEP</strong><p id="missionNext">Visit Medical Bay.</p><small id="missionLog">Flight Surgeon on duty.</small></section>
+          <button class="mission-interact-btn" data-mission-interact type="button">E &nbsp; INTERACT WITH STATION</button>
+        </aside>
+      </div>
+      <div class="mission-modal" id="missionModal" hidden>
+        <div class="mission-modal__shade"></div>
+        <section class="mission-modal__panel" role="dialog" aria-modal="true" aria-labelledby="missionModalTitle">
+          <span class="mission-modal__eyebrow">✦ LAYL SPACE ACADEMY · TRAINING SIMULATION</span>
+          <h2 id="missionModalTitle"></h2><div id="missionModalBody" class="mission-modal__body"></div>
+          <div class="mission-modal__actions" id="missionModalActions"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

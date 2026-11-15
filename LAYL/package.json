@@ -1,0 +1,11 @@
+{
+  "name": "layl-flight-surgeon-capsule-bay",
+  "private": true,
+  "version": "0.7.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs"
+  },
+  "description": "LAYL Mission 01: playable oxygen refilling with four tanks, arrow-key Moon base and Capsule Bay."
+}

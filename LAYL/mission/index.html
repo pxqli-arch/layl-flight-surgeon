@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#081227"><title>LAYL — Lunar Outpost</title><link rel="stylesheet" href="style.css"></head><body>
+<div id="app" class="app">
+  <div class="world" id="world">
+    <img class="world-bg" src="assets/lunar-plaza-wide.webp" alt="LAYL lunar research base on the Moon" draggable="false">
+    <div class="ambient"></div>
+    <button class="hotspot" data-go="medical" style="--x:20%;--y:49%"><span class="pin">✚</span><span class="urgent-badge" aria-label="Medical attention needed">!</span><span class="hotlabel">MEDICAL BAY<small>CREW HEALTH</small></span></button>
+    <button class="hotspot" data-go="oxygen" style="--x:36%;--y:48%"><span class="pin">O₂</span><span class="urgent-badge" aria-label="Oxygen tanks need refilling">!</span><span class="hotlabel">LIFE SUPPORT<small>OXYGEN SYSTEMS</small></span></button>
+    <button class="hotspot" data-go="greenhouse" style="--x:86%;--y:54%"><span class="pin">✧</span><span class="hotlabel">CRYSTAL DOME<small>MERGE & CRAFT</small></span></button>
+    <button class="hotspot core" data-go="command" style="--x:53%;--y:52%"><span class="pin">✦</span><span class="hotlabel">MISSION CONTROL<small>MAIN MENU</small></span></button>
+    <div class="destination" id="destination"></div>
+    <div id="player" class="player" style="left:50%;top:79%"><img id="avatar" src="assets/player/back.webp" alt="Falcon astronaut"></div>
+    <div class="groundHint" id="groundHint">WASD / ARROWS TO WALK · CLICK A STATION TO ENTER</div>
+  </div>
+  <header class="topbar"><div class="brand"><span class="orbit">◌</span><div><b>LAYL</b><small>LUNAR ACADEMY · SOL 01</small></div></div><div class="objective" id="objective"><span class="spark">✦</span><div><small>MISSION 01 · THE FIRST SHIFT</small><strong>Fill four oxygen tanks</strong></div></div><button class="stage-nav-button" id="stageBoardButton">☰ STAGES <span>1 · 2 · 3</span></button></header>
+  <div class="hud"><div class="portrait"><img src="assets/player/front.webp" alt="Falcon"></div><div class="hud-info"><div class="hud-name">FALCON <span>CADET</span></div><div class="hud-meter"><span>♥</span><div class="bar"><i id="healthBar" style="width:100%"></i></div><b id="healthText">100%</b></div><div class="hud-meter"><span>O₂</span><div class="bar"><i id="oxygenBar" style="width:100%"></i></div><b id="oxygenText">100%</b></div></div></div>
+  <div class="brief"><span class="brief-label">CREW STATUS</span><strong id="crewStatus">AMINA · STABLE</strong><span id="briefNote">Monitor your crew and protect the mission.</span></div>
+  <div class="controls"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> MOVE</span><i></i><span>CLICK A STATION TO ENTER</span></div>
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <div class="overlay hidden" id="overlay"><div class="modal" role="dialog" aria-modal="true"><div class="modal-heading"><div><span id="modalEyebrow">LUNAR OUTPOST</span><h2 id="modalTitle">Station</h2></div><button id="closeModal" class="close" aria-label="Close">✕</button></div><div class="modal-body" id="modalBody"></div></div></div>
+
+  <div class="menu-screen" id="intro">
+    <img class="menu-bg" src="assets/menu-bg.webp" alt="LAYL Flight Surgeon title with falcon and lunar outpost" draggable="false">
+    <div class="menu-fade"></div>
+    <div class="menu-shell">
+      <div class="menu-column">
+        
+        <nav class="menu-nav">
+          <button class="menu-btn primary" id="begin">START</button>
+          <button class="menu-btn" id="menuGuide">GUIDE</button>
+          <button class="menu-btn" id="menuCharacters">CHARACTERS</button>
+          <button class="menu-btn" id="menuAchievements">ACHIEVEMENTS</button>
+          <button class="menu-btn" id="menuSettings">SETTINGS</button>
+          <button class="menu-btn" id="menuCredits">CREDITS</button>
+        </nav>
+        <small class="menu-help">MOVE WITH WASD OR ARROW KEYS · CLICK BUILDINGS TO VISIT</small>
+      </div>
+    </div>
+  </div>
+</div><script src="game.js" defer></script></body></html>
